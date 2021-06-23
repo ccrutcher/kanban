@@ -5,9 +5,9 @@
 }
 
 #lists {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    width: 80vw;
+    justify-content: space-evenly;
 }
 
 .list {
