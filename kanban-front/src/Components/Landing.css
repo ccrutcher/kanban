@@ -1,0 +1,17 @@
+#main {
+    display: flex;
+    height: 40vh;
+}
+
+#selections {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-self: center;
+    align-items: center;
+}
+
+#selections > * {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
