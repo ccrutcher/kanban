@@ -5,41 +5,8 @@
 }
 
 #lists {
-    width: 100%;
+    width: 90%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
-}
-
-.list {
-    width: 15vw;
-    height: 40vh;
-    border: 2px solid black;
-    display: flex;
-    flex-direction: column;
-}
-
-.list-title-container {
-    height: 15%;
-    width: 100%;
-    background-color: blue;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.title-input {
-    width: 100%; 
-    resize: none;
-    box-sizing: border-box;
-    border: none;
-    background-color: transparent;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    color: white;
-    font-size: 25px;
-    font-weight: bold;
-    word-wrap:break-word;
-}
-
-.add-content-container{
-    margin-top: auto;
 }

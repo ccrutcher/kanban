@@ -1,5 +1,9 @@
 import React, {useState} from 'react'
 
+import './List.css'
+
+import Card from './Card'
+
 export default function List({index, title, content, changeTitle, addItem, deleteList}) {
     const [newItem, setNewItem] = useState('')
 
@@ -27,16 +31,13 @@ export default function List({index, title, content, changeTitle, addItem, delet
 
                 <div className="list-item-container">
                     {content.map((item, index) => {
-                        return <div key={index}>
-                            {item}
-                            <button>Delete</button>
-                        </div>
+                        return <Card key={index} item={item} />
                     })}
                 </div>
 
                 <div className="add-content-container">
                     <form>
-                        <input type="text" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
+                        <input type="text" className="add-content-input" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
                         <button type="submit" onClick={e => 
                             {
                                 e.preventDefault()

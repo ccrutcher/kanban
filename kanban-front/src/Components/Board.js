@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 
 import './Board.css'
 
@@ -49,9 +49,9 @@ export default function Board() {
                 {lists.map((list, index) => {
                     return <List key={index} index={index} title={list.title} content={list.content} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} />
                 })}
-                <div id="new-list-container">
-                    <button onClick={() => generateNewList()}>New List</button>
-                </div>
+            </div>
+            <div id="new-list-container">
+                <button onClick={() => generateNewList()}>New List</button>
             </div>
         </div>
     )
