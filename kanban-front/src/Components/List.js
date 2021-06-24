@@ -1,6 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 
-export default function List({index, title, content, changeTitle, addItem}) {
+export default function List({index, title, content, changeTitle, addItem, deleteList}) {
+    const [newItem, setNewItem] = useState('')
+
+    const itemToAdd = (itemToAdd) => {
+        setNewItem(itemToAdd)
+    }
+
     return (
         <div>
             <div className="list">
@@ -16,6 +22,7 @@ export default function List({index, title, content, changeTitle, addItem}) {
                             onChange={e => changeTitle(e.target.value, index)}
                         />
                     </div>
+                    <button onClick={() => deleteList(index)}>Delete</button>
                 </div>
 
                 <div className="list-item-container">
@@ -28,9 +35,16 @@ export default function List({index, title, content, changeTitle, addItem}) {
                 </div>
 
                 <div className="add-content-container">
-                    <form onSubmit={() => addItem()}>
-                        <input type="text" autoComplete="off" />
-                        <button type="submit">Add Item</button>
+                    <form>
+                        <input type="text" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
+                        <button type="submit" onClick={e => 
+                            {
+                                e.preventDefault()
+                                addItem(newItem, index)
+                                setNewItem('')
+                            }}>
+                            Add Item
+                        </button>
                     </form>
                 </div>
 
