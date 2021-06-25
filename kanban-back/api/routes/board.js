@@ -1,17 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const boardList = require('../controllers/boardListController');
+const boardController = require('../controllers/boardController');
+const listController = require('../controllers/listController');
   
     // boardList Routes
-    router.get('/', boardList.list_all_boards)
+    router.get('/', boardController.list_all_boards);
+    router.post('/', boardController.create_a_board);
 
+    router.get('/:boardId', boardController.read_a_board);
+    router.delete('/:boardId', boardController.delete_a_board);
+
+    router.get('/lists', listController.list_all_lists);
+    router.post('/lists', listController.create_a_list);
   
-  
-    /*app.route('/boards/:boardId')
-      .get(boardList.read_a_board)
-      .put(boardList.update_a_board)
-      .delete(board.delete_a_board);*/
 
   
   module.exports = router;

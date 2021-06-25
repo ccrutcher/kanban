@@ -11,7 +11,7 @@ const app = express();
 //Set up mongoose connection
 const mongoose = require('mongoose');
 const mongoDB = process.env.MONGODB;
-mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
