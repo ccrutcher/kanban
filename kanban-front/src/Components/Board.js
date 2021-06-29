@@ -4,24 +4,35 @@ import './Board.css'
 
 import List from './List'
 
-import {
-    useHistory
-  } from "react-router-dom";
 
 export default function Board() {
     const [lists, setLists] = useState([])
+    const [initialLoadDone, setInitialLoadDone] = useState(false)
 
-    let history = useHistory()
-
+    //Get data for current board
     useEffect(() => {
-        let roomData = history.location.state.info;
-        roomData.forEach(list => {
-            setLists([...lists, {title: list.title, content: list.cards}])
-        })
+        let boardData;
+        (async () => {
+            const response = await fetch(`http://localhost:8000${window.location.pathname}`);
+            const boardDataResponse = await response.json();
+            boardData = boardDataResponse;
+            boardData.forEach(list => {
+                setLists([...lists, {title: list.title, cards: list.cards, index: list.index, boardId: list.boardId}])
+            })
+            setInitialLoadDone(true)
+        })()
     }, [])
 
+    //Update server if lists change locally
+    useEffect(() => {
+        if(initialLoadDone){
+            console.log("Update Server")
+        }
+    }, [lists])
+
+
     const generateNewList = () => {
-        setLists([...lists, {title: "Unitlted", content: []}]);
+        setLists([...lists, {title: "Unitlted", cards: []}]);
     }
 
     const changeTitle = (e, index) => {
@@ -37,7 +48,7 @@ export default function Board() {
     const addItem = (val, index) => {       
         let updatedLists = lists.map(item => {
             if(lists.indexOf(item) === index){
-                return{...item, content: [...item.content, val]}
+                return{...item, cards: [...item.cards, val]}
             }
             return item;
         })
@@ -58,11 +69,14 @@ export default function Board() {
         <div id="main">
             <div id="lists">
                 {lists.map((list, index) => {
-                    return <List key={index} index={index} title={list.title} content={list.content} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} />
+                    return <List key={index} index={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} />
                 })}
             </div>
             <div id="new-list-container">
                 <button onClick={() => generateNewList()}>New List</button>
+            </div>
+            <div id="log-list-data">
+                <button onClick={() => (() => {console.log(lists)})()}>Log lists</button>
             </div>
         </div>
     )

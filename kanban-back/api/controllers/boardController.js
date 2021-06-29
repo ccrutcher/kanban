@@ -18,23 +18,6 @@ exports.create_a_board = function(req, res) {
   });
 };
 
-exports.read_a_board = function(req, res) {
-  Board.find({'id': req.params.boardId},{_id:0, __v:0}, function(err, board) {
-    if (err)
-      res.send(err);
-    res.json(board);
-  });
-};
-
-/*
-exports.update_a_board = function(req, res) {
-  Board.findOneAndUpdate({_id: req.params.boardId}, req.body, {new: true}, function(err, board) {
-    if (err)
-      res.send(err);
-    res.json(board);
-  });
-};
-*/
 
 exports.delete_a_board = function(req, res) {
   Board.remove({

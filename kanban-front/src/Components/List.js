@@ -4,11 +4,17 @@ import './List.css'
 
 import Card from './Card'
 
-export default function List({index, title, content, changeTitle, addItem, deleteList}) {
+export default function List({index, title, cards, changeTitle, addItem, deleteList}) {
     const [newItem, setNewItem] = useState('')
 
     const itemToAdd = (itemToAdd) => {
         setNewItem(itemToAdd)
+    }
+
+    const handleKeyPress = (e) => {
+        if(e.keyCode === 13){
+            e.target.blur();
+        }
     }
 
     return (
@@ -22,15 +28,16 @@ export default function List({index, title, content, changeTitle, addItem, delet
                             autoComplete="off"
                             spellCheck="false"
                             type="text"
-                            value={title}
-                            onChange={e => changeTitle(e.target.value, index)}
+                            defaultValue={title}
+                            onBlur={e => changeTitle(e.target.value, index)}
+                            onKeyDown={e => handleKeyPress(e)}
                         />
                     </div>
                     <button onClick={() => deleteList(index)}>Delete</button>
                 </div>
 
                 <div className="list-item-container">
-                    {content.map((item, index) => {
+                    {cards.map((item, index) => {
                         return <Card key={index} item={item} />
                     })}
                 </div>

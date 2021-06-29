@@ -25,17 +25,8 @@ exports.create_a_list = function(req, res) {
     res.json(list);
   });
 };
+
 /*
-
-exports.read_a_board = function(req, res) {
-  Board.find({'id': req.params.boardId}, function(err, board) {
-    if (err)
-      res.send(err);
-    res.json(board);
-  });
-};
-
-
 exports.update_a_board = function(req, res) {
   Board.findOneAndUpdate({_id: req.params.boardId}, req.body, {new: true}, function(err, board) {
     if (err)
