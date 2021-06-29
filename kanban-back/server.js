@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
 const PORT = process.env.PORT || 8080;
+const cors = require('cors');
 
 const indexRouter = require('./api/routes/index');
 const boardRouter = require('./api/routes/board');
@@ -19,6 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use('/', indexRouter)
 app.use('/board', boardRouter)
