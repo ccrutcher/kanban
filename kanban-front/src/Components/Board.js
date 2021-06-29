@@ -1,11 +1,24 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 import './Board.css'
 
 import List from './List'
 
+import {
+    useHistory
+  } from "react-router-dom";
+
 export default function Board() {
-    const [lists, setLists] = useState([{title: "To Do", content: ['read', 'eat']}, {title: "In Progress", content: []}, {title: "Completed", content: []}])
+    const [lists, setLists] = useState([])
+
+    let history = useHistory()
+
+    useEffect(() => {
+        let roomData = history.location.state.info;
+        roomData.forEach(list => {
+            setLists([...lists, {title: list.title, content: list.cards}])
+        })
+    }, [])
 
     const generateNewList = () => {
         setLists([...lists, {title: "Unitlted", content: []}]);
@@ -38,9 +51,7 @@ export default function Board() {
                 remainingLists.push(item);
             }
         })
-
        setLists(remainingLists)
-       console.log(lists);
     }
 
     return (
