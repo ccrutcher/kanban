@@ -11,8 +11,8 @@ const listController = require('../controllers/listController');
     router.get('/:boardId', boardController.read_a_board);
     router.delete('/:boardId', boardController.delete_a_board);
 
-    router.get('/lists', listController.list_all_lists);
-    router.post('/lists', listController.create_a_list);
+    router.get('/:boardId/lists', listController.list_board_lists);
+    router.post('/:boardId/lists', listController.create_a_list);
   
 
   

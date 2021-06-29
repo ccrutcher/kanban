@@ -1,11 +1,19 @@
 const List = require('../models/listModel');
-const Board = require('../models/boardModel');
 
 exports.list_all_lists = (req, res) => {
-  List.find({'boardId': req.params.boardId}, function(err, list) {
+  console.log(req.body);
+  List.find({}, function(err, list) {
     if (err)
       res.send(err);
     res.json(list);
+  });
+};
+
+exports.list_board_lists = function(req, res) {
+  List.find({'boardId': req.params.boardId},{_id:0, __v:0}, function(err, board) {
+    if (err)
+      res.send(err);
+    res.json(board);
   });
 };
 
@@ -17,9 +25,8 @@ exports.create_a_list = function(req, res) {
     res.json(list);
   });
 };
-
-
 /*
+
 exports.read_a_board = function(req, res) {
   Board.find({'id': req.params.boardId}, function(err, board) {
     if (err)

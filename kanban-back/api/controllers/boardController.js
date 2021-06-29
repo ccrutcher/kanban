@@ -18,7 +18,6 @@ exports.create_a_board = function(req, res) {
   });
 };
 
-
 exports.read_a_board = function(req, res) {
   Board.find({'id': req.params.boardId},{_id:0, __v:0}, function(err, board) {
     if (err)

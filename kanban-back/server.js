@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 8080;
 
 const indexRouter = require('./api/routes/index');
 const boardRouter = require('./api/routes/board');
+const listRouter = require('./api/routes/list')
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', indexRouter)
 app.use('/board', boardRouter)
+app.use('/list', listRouter)
 
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))
