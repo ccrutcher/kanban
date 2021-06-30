@@ -6,6 +6,7 @@ import {
     useHistory
   } from "react-router-dom";
 
+
 export default function Landing() {
     const [roomNumber, setRoomNumber] = useState('');
     const [submit, setSubmit] = useState(false);
@@ -17,6 +18,14 @@ export default function Landing() {
             history.push(`/board/${roomNumber}`)
         }
     }, [submit])
+
+    const createRoom = () => {
+        (async () => {
+            const response = await fetch(`http://localhost:8000/createBoard`);
+            const boardCreateResponse = await response.json();
+            history.push(`/board/${boardCreateResponse.id}`);
+        })()
+    }
 
     return (
         <div id="main">
@@ -31,7 +40,7 @@ export default function Landing() {
                             Enter
                         </button>
                 </form>
-                <button>Create New Room</button>
+                <button onClick={() => createRoom()}>Create New Room</button>
                 <Link to="/demo">
                     <button>Demo</button>
                 </Link>

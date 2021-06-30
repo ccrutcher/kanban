@@ -9,15 +9,24 @@ exports.list_all_boards = (req, res) => {
 };
 
 
+const randomNumber = (min = 100000000, max = 999999999) => { 
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
 exports.create_a_board = function(req, res) {
-  let new_board = new Board(req.body);
+  let newAttempt = randomNumber();
+  let board_details = {id: newAttempt}
+  let new_board = new Board(board_details);
+  console.log(new_board);
   new_board.save(function(err, board) {
-    if (err)
+    if (err){
+      console.log("Something went wrong while creating a board.");
+      console.log(err)
       res.send(err);
+    }
     res.json(board);
   });
 };
-
 
 exports.delete_a_board = function(req, res) {
   Board.remove({

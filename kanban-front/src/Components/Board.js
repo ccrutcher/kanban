@@ -15,10 +15,15 @@ export default function Board() {
         (async () => {
             const response = await fetch(`http://localhost:8000${window.location.pathname}`);
             const boardDataResponse = await response.json();
-            boardData = boardDataResponse;
-            boardData.forEach(list => {
-                setLists([...lists, {title: list.title, cards: list.cards, index: list.index, boardId: list.boardId}])
-            })
+            boardData = JSON.stringify(boardDataResponse);
+            boardData = JSON.parse(boardData)[0];
+            console.log(boardData);
+            /*boardData.lists.forEach(list => {
+                console.log([...lists, {title: list.title, cards: list.cards, index: list.index}])
+                setLists([...lists, {title: list.title, cards: list.cards, index: list.index}])
+                console.log(lists)
+            })*/
+            setLists(boardData.lists)
             setInitialLoadDone(true)
         })()
     }, [])

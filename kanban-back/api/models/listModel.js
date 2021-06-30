@@ -12,13 +12,7 @@ const ListSchema = new Schema({
   },
   cards: [{    
     type: Schema.Types.ObjectId,
-    ref: 'Card'}],
-  boardId: {
-    type: Number,
-    min : 100000000,
-    max : 999999999,
-    required: true
-  }
+    ref: 'Card'}]
 });
 
 module.exports = mongoose.model('List', ListSchema)
