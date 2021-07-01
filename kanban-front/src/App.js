@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import Landing from './Components/Landing'
-import Demo from './Components/Demo'
 import Board from './Components/Board'
 
 export default function App() {
@@ -20,9 +19,6 @@ export default function App() {
         <Switch>
         <Route exact path="/board/:boardId">
             <Board />
-          </Route>
-          <Route path='/demo'>
-            <Demo />
           </Route>
           <Route path="/">
             <Landing />

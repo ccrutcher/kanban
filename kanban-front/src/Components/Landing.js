@@ -47,9 +47,6 @@ export default function Landing() {
                         </button>
                 </form>
                 <button onClick={() => createRoom()}>Create New Room</button>
-                <Link to="/demo">
-                    <button>Demo</button>
-                </Link>
             </div>
         </div>
     )

@@ -1,5 +1,6 @@
 const Board = require('../models/boardModel');
 
+//Get all boards
 exports.list_all_boards = (req, res) => {
   Board.find({},{_id:0, __v:0}, function(err, board) {
     if (err)
@@ -8,6 +9,7 @@ exports.list_all_boards = (req, res) => {
   });
 };
 
+//Get a specific board
 exports.get_board = function(req, res) {
   Board.find({'boardID': req.params.boardId}, function(err, board) {
     if (err)
@@ -20,6 +22,7 @@ const randomNumber = (min = 100000000, max = 999999999) => {
   return Math.floor(Math.random() * (max - min) + min);
 }
 
+//Create a new board with a random 9 digit room ID
 exports.create_a_board = function(req, res) {
   let newAttempt = randomNumber();
   let board_details = {boardID: newAttempt};
@@ -34,6 +37,7 @@ exports.create_a_board = function(req, res) {
   });
 };
 
+//Delete a specific board
 exports.delete_a_board = function(req, res) {
   Board.deleteOne({
     _id: req.body.boardID

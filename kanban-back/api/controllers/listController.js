@@ -1,5 +1,6 @@
 const Board = require('../models/boardModel');
 
+//Get all lists for current board
 exports.list_board_lists = function(req, res) {
   Board.find({'boardID': req.params.boardId}, function(err, board) {
     if (err)
@@ -49,13 +50,4 @@ exports.delete_a_list = async function(req, res) {
       res.send(data);
     }
   );
-  // console.log(currentBoard.lists);
-  //currentBoard.lists.remove({_id: req.params.listToRemove})
-  // currentBoard.lists.remove({
-  //   _id: req.params.listToRemove
-  // }, function(err, list) {
-  //   if (err)
-  //     res.send(err);
-  //   res.json({ message: 'List successfully deleted' });
-  // });
 };

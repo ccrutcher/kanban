@@ -1,5 +1,6 @@
 const Board = require('../models/boardModel');
 
+//Get all cards for selected list
 exports.list_cards = function(req, res) {
 //   Board.find({'boardID': req.params.boardId}, function(err, board) {
 //     if (err)
