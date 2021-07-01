@@ -1,49 +1,61 @@
-const List = require('../models/listModel');
-
-exports.list_all_lists = (req, res) => {
-  List.find({}, function(err, list) {
-    if (err)
-      res.send(err);
-    res.json(list);
-  });
-};
-
+const Board = require('../models/boardModel');
 
 exports.list_board_lists = function(req, res) {
-  Board.find({'id': req.params.boardId},{_id:0, __v:0}, function(err, board) {
+  Board.find({'boardID': req.params.boardId}, function(err, board) {
     if (err)
       res.send(err);
+    res.json(board.lists);
+  });
+};
+
+//Create a new list and then save to MongoDB
+exports.create_a_list = async function(req, res) {
+  const currentBoard = await Board.findOne({ _id: req.body.boardID});  
+  currentBoard.lists.push({ cards: [], title: "Untitled", index: currentBoard.lists.length })
+
+  currentBoard.save(function(err, board) {
+    if (err){
+      console.log("Something went wrong while creating the list");
+      console.log(err)
+      res.send(err);
+    }
     res.json(board);
   });
 };
 
+//Update the boards lists and then save to MongoDB
+exports.update_lists = async function(req, res) {
+  const currentBoard = await Board.findOne({ _id: req.body.boardID});  
+  currentBoard.lists = req.body.lists;
 
-exports.create_a_list = function(req, res) {
-  let new_list = new List(req.body);
-  new_list.save(function(err, list) {
-    if (err)
+  currentBoard.save(function(err, board) {
+    if (err){
+      console.log("Something went wrong while updating the lists");
+      console.log(err)
       res.send(err);
-    res.json(list);
-  });
-};
-
-/*
-exports.update_a_board = function(req, res) {
-  Board.findOneAndUpdate({_id: req.params.boardId}, req.body, {new: true}, function(err, board) {
-    if (err)
-      res.send(err);
+    }
     res.json(board);
   });
 };
 
-
-exports.delete_a_board = function(req, res) {
-  Board.remove({
-    id: req.params.boardId
-  }, function(err, board) {
-    if (err)
-      res.send(err);
-    res.json({ message: 'Board successfully deleted' });
-  });
+exports.delete_a_list = async function(req, res) {
+  Board.findOneAndUpdate(
+    { '_id': req.body.boardID },
+    { $pull: { lists: { _id: req.body.listToRemove }}}, (err, data) => {
+      if (err){
+        console.log(err);
+        res.send(err);
+      }
+      res.send(data);
+    }
+  );
+  // console.log(currentBoard.lists);
+  //currentBoard.lists.remove({_id: req.params.listToRemove})
+  // currentBoard.lists.remove({
+  //   _id: req.params.listToRemove
+  // }, function(err, list) {
+  //   if (err)
+  //     res.send(err);
+  //   res.json({ message: 'List successfully deleted' });
+  // });
 };
-*/

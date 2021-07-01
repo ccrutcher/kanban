@@ -8,6 +8,13 @@ exports.list_all_boards = (req, res) => {
   });
 };
 
+exports.get_board = function(req, res) {
+  Board.find({'boardID': req.params.boardId}, function(err, board) {
+    if (err)
+      res.send(err);
+    res.json(board);
+  });
+};
 
 const randomNumber = (min = 100000000, max = 999999999) => { 
   return Math.floor(Math.random() * (max - min) + min);
@@ -15,9 +22,8 @@ const randomNumber = (min = 100000000, max = 999999999) => {
 
 exports.create_a_board = function(req, res) {
   let newAttempt = randomNumber();
-  let board_details = {id: newAttempt}
+  let board_details = {boardID: newAttempt};
   let new_board = new Board(board_details);
-  console.log(new_board);
   new_board.save(function(err, board) {
     if (err){
       console.log("Something went wrong while creating a board.");
@@ -29,8 +35,8 @@ exports.create_a_board = function(req, res) {
 };
 
 exports.delete_a_board = function(req, res) {
-  Board.remove({
-    id: req.params.boardId
+  Board.deleteOne({
+    _id: req.body.boardID
   }, function(err, board) {
     if (err)
       res.send(err);

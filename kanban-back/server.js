@@ -6,6 +6,8 @@ const cors = require('cors');
 
 const indexRouter = require('./api/routes/index');
 const boardRouter = require('./api/routes/board');
+const listRouter = require('./api/routes/list');
+const cardRouter = require('./api/routes/card');
 
 const app = express();
 
@@ -21,8 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use('/', indexRouter)
+app.use('/board/:boardId/lists/:listId', cardRouter)
+app.use('/board/:boardId/lists', listRouter)
 app.use('/board', boardRouter)
+app.use('/', indexRouter)
+
+
 
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))

@@ -17,13 +17,19 @@ export default function Landing() {
         if(submit){
             history.push(`/board/${roomNumber}`)
         }
+    // eslint-disable-next-line
     }, [submit])
 
+
+    //Send a post request to create a new board
     const createRoom = () => {
         (async () => {
-            const response = await fetch(`http://localhost:8000/createBoard`);
+            const requestOptions = {
+                method: 'POST'
+            };
+            const response = await fetch(`http://localhost:8000/board/createBoard`, requestOptions);
             const boardCreateResponse = await response.json();
-            history.push(`/board/${boardCreateResponse.id}`);
+            history.push(`/board/${boardCreateResponse.boardID}`);
         })()
     }
 

@@ -24,7 +24,7 @@ const ListSchema = new Schema({
   });
 
 const BoardSchema = new Schema({
-    id: {
+    boardID: {
     type: Number,
     min : 100000000,
     max : 999999999,
