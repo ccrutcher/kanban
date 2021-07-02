@@ -11,6 +11,7 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
 
     useEffect(() => {
         updateCard(index, listIndex, currentTitle, checked);
+        // eslint-disable-next-line
     }, [checked, currentTitle])
 
 
@@ -20,7 +21,7 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
                 <div className="card-container" onMouseEnter={() => setShowButtons(true)} onMouseLeave={() => setShowButtons(false)}>
 
                         <input type="checkbox" checked={checked} onChange={() => { setChecked(!checked) }} />
-                    <div style={{ textDecoration: checked == true ? 'line-through' : 'none' }} >
+                    <div style={{ textDecoration: checked === true ? 'line-through' : 'none' }} >
                         <form id="card-title-form">
                             <input type="text" autoComplete="off" spellCheck="false" value={newTitle} onChange={e => setNewTitle(e.target.value)} />
                         </form>
@@ -37,7 +38,7 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
             ) : (
                 <div className="card-container" onMouseEnter={() => setShowButtons(true)} onMouseLeave={() => setShowButtons(false)}>
                     <input type="checkbox" checked={checked} onChange={() => { setChecked(!checked) }} />
-                    <div style={{ textDecoration: checked == true ? 'line-through' : 'none' }} >
+                    <div style={{ textDecoration: checked === true ? 'line-through' : 'none' }} >
                         {currentTitle}
                     </div>
                     {

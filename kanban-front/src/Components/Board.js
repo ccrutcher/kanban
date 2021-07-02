@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
-import {
-    useHistory
-} from "react-router-dom";
-
+import {useHistory} from "react-router-dom";
 import './Board.css'
-
 import List from './List'
 
 export default function Board() {
@@ -49,6 +44,7 @@ export default function Board() {
                 const data = await response.json();
                 const stringData = JSON.stringify(data);
                 const parsedData = JSON.parse(stringData);
+                console.log(parsedData);
             })()
             setAction();
         } else if (action === "PUTCARD") {
@@ -64,9 +60,11 @@ export default function Board() {
                 const data = await response.json();
                 const stringData = JSON.stringify(data);
                 const parsedData = JSON.parse(stringData);
+                console.log(parsedData);
             })()
             setAction();
         }
+        // eslint-disable-next-line
     }, [lists])
 
     //Change title of a list
@@ -94,6 +92,7 @@ export default function Board() {
             const data = await response.json();
             const stringData = JSON.stringify(data);
             const parsedData = JSON.parse(stringData);
+            console.log(parsedData);
             getBoardData();
         })()
     }
@@ -183,6 +182,7 @@ export default function Board() {
             const data = await response.json();
             const stringData = JSON.stringify(data);
             const parsedData = JSON.parse(stringData);
+            console.log(parsedData);
         })()
         history.push('/');
     }

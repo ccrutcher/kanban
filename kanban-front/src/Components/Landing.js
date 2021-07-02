@@ -1,10 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import './Landing.css'
-
-import {
-    Link,
-    useHistory
-  } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 
 export default function Landing() {

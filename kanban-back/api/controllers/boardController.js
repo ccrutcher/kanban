@@ -30,10 +30,9 @@ exports.create_a_board = function(req, res) {
   new_board.save(function(err, board) {
     if (err){
       console.log("Something went wrong while creating a board.");
-      console.log(err)
       res.send(err);
     }
-    res.json(board);
+    res.send(board);
   });
 };
 
