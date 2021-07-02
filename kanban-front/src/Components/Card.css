@@ -1,4 +1,22 @@
-.card {
-    background-color: rgb(223, 228, 185);
-    height: 15px;
+.card-container {
+    background-color: rgb(255, 255, 255);
+    height: fit-content;
+    min-height: 55px;
+    max-height: 100px;
+    margin: 5px;
+    display: flex;
+}
+
+#button-container {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#edit-button {
+}
+
+#delete-button {
+    margin-top: 5px;
 }

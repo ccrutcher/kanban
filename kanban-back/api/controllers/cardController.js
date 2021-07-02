@@ -29,22 +29,6 @@ exports.create_a_card = async function(req, res) {
     });
 };
 
-//Update the lists cards and then save to MongoDB
-exports.update_cards = async function(req, res) {
-    console.log("update cards")
-//   const currentBoard = await Board.findOne({ _id: req.body.boardID});  
-//   currentBoard.lists = req.body.lists;
-
-//   currentBoard.save(function(err, board) {
-//     if (err){
-//       console.log("Something went wrong while updating the lists");
-//       console.log(err)
-//       res.send(err);
-//     }
-//     res.json(board);
-//   });
-};
-
 exports.delete_a_card = async function(req, res) {
     const currentBoard = await Board.findOne({ _id: req.body.boardID});
     let listIndex = req.body.listIndex;
@@ -67,6 +51,3 @@ exports.delete_a_card = async function(req, res) {
     res.send(board);
     });
 };
-
-
-// db.collection('connect').update({_id: id}, {$push: {[str]: item}}); 

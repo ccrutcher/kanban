@@ -4,7 +4,7 @@ import './List.css'
 
 import Card from './Card'
 
-export default function List({listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard}) {
+export default function List({listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard}) {
     const [newItem, setNewItem] = useState('')
 
     const itemToAdd = (itemToAdd) => {
@@ -38,7 +38,7 @@ export default function List({listIndex, title, cards, changeTitle, addItem, del
 
                 <div className="list-item-container">
                     {cards.map((card, index) => {
-                        return <Card key={index} listIndex={listIndex} index={index} title={card.title} isChecked={card.isChecked} deleteCard={deleteCard} />
+                        return <Card key={index} listIndex={listIndex} index={index} title={card.title} isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} />
                     })}
                 </div>
 

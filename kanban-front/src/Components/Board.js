@@ -1,14 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {
     useHistory
-  } from "react-router-dom";
+} from "react-router-dom";
 
 import './Board.css'
 
 import List from './List'
-
-
 
 export default function Board() {
     const [lists, setLists] = useState([])
@@ -18,7 +16,7 @@ export default function Board() {
 
     let history = useHistory();
 
-//Get data for current board
+    //Get data for current board
     const getBoardData = async () => {
         let boardData;
         const response = await fetch(`http://localhost:8000${window.location.pathname}`);
@@ -34,12 +32,28 @@ export default function Board() {
         getBoardData();
     }, [])
 
-//Update server if lists change locally
+    //Update server if lists change locally
     useEffect(() => {
-        if(!initialLoadDone) return
-        if(action === "PUT"){
+        console.log("Update")
+        if (!initialLoadDone) return
+        if (action === "PUTLIST") {
             console.log("Update Server");
             //Send post request with updated lists
+            (async () => {
+                const requestOptions = {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ boardID: board_id, lists: lists })
+                };
+                const response = await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
+                const data = await response.json();
+                const stringData = JSON.stringify(data);
+                const parsedData = JSON.parse(stringData);
+            })()
+            setAction();
+        } else if (action === "PUTCARD") {
+            console.log("Update Server");
+            //Send post request with updated cards
             (async () => {
                 const requestOptions = {
                     method: 'PUT',
@@ -55,19 +69,19 @@ export default function Board() {
         }
     }, [lists])
 
-//Change title of a list
+    //Change title of a list
     const changeTitle = (e, index) => {
         let updatedLists = lists.map(item => {
-            if(lists.indexOf(item) === index){
-                return{...item, title: e}
+            if (lists.indexOf(item) === index) {
+                return { ...item, title: e }
             }
             return item;
         })
-        setAction("PUT");
+        setAction("PUTLIST");
         setLists(updatedLists);
     }
 
-//Delete a list
+    //Delete a list
     const deleteList = (listToRemove) => {
         let list_id = lists[listToRemove]._id;
         (async () => {
@@ -84,7 +98,7 @@ export default function Board() {
         })()
     }
 
-//Create a new empty list
+    //Create a new empty list
     const generateNewList = () => {
         (async () => {
             const requestOptions = {
@@ -101,13 +115,8 @@ export default function Board() {
         })()
     }
 
-// get
-// post
-// put
-// delete
-
-//Add a new card to a list
-    const addItem = (val, index) => {   
+    //Add a new card to a list
+    const addItem = (val, index) => {
         let list_id = lists[index]._id;
         (async () => {
             const requestOptions = {
@@ -124,28 +133,45 @@ export default function Board() {
         })()
     }
 
-//Update a card
+    //Update a card
+    const updateCard = (cardIndex, listIndex, title, isChecked) => {
+        let updatedLists = lists.map(list => {
+            if (lists.indexOf(list) === listIndex) {
+                let updatedCards = list.cards.map((card, index) => {
+                    if (index === cardIndex) {
+                        console.log(card, isChecked)
+                        return { ...card, title: title, isChecked: isChecked }
+                    }
+                    return card;
+                })
+                list.cards = updatedCards;
+                return list;
+            }
+            return list;
+        })
+        setAction("PUTLIST");
+        setLists(updatedLists);
+    }
 
+    //Delete a card
+    const deleteCard = (cardToRemove, listIndex) => {
+        let list_id = lists[listIndex]._id;
+        (async () => {
+            const requestOptions = {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ boardID: board_id, listIndex: listIndex, cardToRemove: lists[listIndex].cards[cardToRemove]._id })
+            };
+            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
+            const data = await response.json();
+            const stringData = JSON.stringify(data);
+            const parsedData = JSON.parse(stringData);
+            console.log(parsedData);
+            getBoardData();
+        })()
+    }
 
-//Delete a card
-
-const deleteCard = (cardToRemove, listIndex) => {
-    let list_id = lists[listIndex]._id;
-    (async () => {
-        const requestOptions = {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ boardID: board_id, listIndex: listIndex, cardToRemove: lists[listIndex].cards[cardToRemove]._id })
-        };
-        const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
-        const data = await response.json();
-        const stringData = JSON.stringify(data);
-        const parsedData = JSON.parse(stringData);
-        getBoardData();
-    })()
-}
-
-//Delete the current board
+    //Delete the current board
     const deleteBoard = () => {
         (async () => {
             const requestOptions = {
@@ -165,7 +191,7 @@ const deleteCard = (cardToRemove, listIndex) => {
         <div id="main">
             <div id="lists">
                 {lists.map((list, index) => {
-                    return <List key={index} listIndex={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} deleteCard={deleteCard} />
+                    return <List key={index} listIndex={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} deleteCard={deleteCard} updateCard={updateCard} />
                 })}
             </div>
             <div id="new-list-container">
@@ -176,7 +202,7 @@ const deleteCard = (cardToRemove, listIndex) => {
             </div>
 
             <div id="log-list-data">
-                <button onClick={() => (() => {console.log(lists)})()}>Log lists</button>
+                <button onClick={() => (() => { console.log(lists) })()}>Log lists</button>
             </div>
         </div>
     )
