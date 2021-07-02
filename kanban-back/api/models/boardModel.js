@@ -8,6 +8,10 @@ const CardSchema = new Schema({
     },
     description: {
       type: String
+    },
+    isChecked: {
+      type: Boolean,
+      default: false
     }
   });
 

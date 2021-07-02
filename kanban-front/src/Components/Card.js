@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function Card({item}) {
+export default function Card({ index, listIndex, title, isChecked, deleteCard}) {
     return (
-        <div>
-            {item}
+        <div className="card">
+            {title}
+            <button onClick={() => deleteCard(index, listIndex)}>Delete</button>
         </div>
     )
 }

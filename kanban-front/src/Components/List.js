@@ -4,7 +4,7 @@ import './List.css'
 
 import Card from './Card'
 
-export default function List({index, title, cards, changeTitle, addItem, deleteList}) {
+export default function List({listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard}) {
     const [newItem, setNewItem] = useState('')
 
     const itemToAdd = (itemToAdd) => {
@@ -29,16 +29,16 @@ export default function List({index, title, cards, changeTitle, addItem, deleteL
                             spellCheck="false"
                             type="text"
                             defaultValue={title}
-                            onBlur={e => changeTitle(e.target.value, index)}
+                            onBlur={e => changeTitle(e.target.value, listIndex)}
                             onKeyDown={e => handleKeyPress(e)}
                         />
                     </div>
-                    <button onClick={() => deleteList(index)}>Delete</button>
+                    <button onClick={() => deleteList(listIndex)}>Delete</button>
                 </div>
 
                 <div className="list-item-container">
-                    {cards.map((item, index) => {
-                        return <Card key={index} item={item} />
+                    {cards.map((card, index) => {
+                        return <Card key={index} listIndex={listIndex} index={index} title={card.title} isChecked={card.isChecked} deleteCard={deleteCard} />
                     })}
                 </div>
 
@@ -48,7 +48,7 @@ export default function List({index, title, cards, changeTitle, addItem, deleteL
                         <button type="submit" onClick={e => 
                             {
                                 e.preventDefault()
-                                addItem(newItem, index)
+                                addItem(newItem, listIndex)
                                 setNewItem('')
                             }}>
                             Add Item

@@ -82,7 +82,6 @@ export default function Board() {
             const parsedData = JSON.parse(stringData);
             getBoardData();
         })()
-
     }
 
 //Create a new empty list
@@ -102,18 +101,49 @@ export default function Board() {
         })()
     }
 
-
+// get
+// post
+// put
+// delete
 
 //Add a new card to a list
-    const addItem = (val, index) => {       
-        let updatedLists = lists.map(item => {
-            if(lists.indexOf(item) === index){
-                return{...item, cards: [...item.cards, val]}
-            }
-            return item;
-        })
-        setLists(updatedLists);
+    const addItem = (val, index) => {   
+        let list_id = lists[index]._id;
+        (async () => {
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ boardID: board_id, index: index, cardTitle: val })
+            };
+            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
+            const data = await response.json();
+            const stringData = JSON.stringify(data);
+            const parsedData = JSON.parse(stringData);
+            console.log(parsedData);
+            getBoardData();
+        })()
     }
+
+//Update a card
+
+
+//Delete a card
+
+const deleteCard = (cardToRemove, listIndex) => {
+    let list_id = lists[listIndex]._id;
+    (async () => {
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ boardID: board_id, listIndex: listIndex, cardToRemove: lists[listIndex].cards[cardToRemove]._id })
+        };
+        const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
+        const data = await response.json();
+        const stringData = JSON.stringify(data);
+        const parsedData = JSON.parse(stringData);
+        getBoardData();
+    })()
+}
 
 //Delete the current board
     const deleteBoard = () => {
@@ -135,7 +165,7 @@ export default function Board() {
         <div id="main">
             <div id="lists">
                 {lists.map((list, index) => {
-                    return <List key={index} index={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} />
+                    return <List key={index} listIndex={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} deleteCard={deleteCard} />
                 })}
             </div>
             <div id="new-list-container">
