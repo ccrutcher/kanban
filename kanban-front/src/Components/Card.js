@@ -41,14 +41,16 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
                     {
                         showButtons && (
                             <div id="button-container">
-
+                                
                                 {cardIsMoving ?
-                                    <button id="edit-button" onClick={() => cancelMoveCard}>Cancel</button>
-                                :
-                                    <button id="edit-button" onClick={() => setEdit(!edit)}>Edit</button>
+                                    <button id="edit-button" className="card-button" onClick={() => cancelMoveCard}>Cancel</button>
+                                    :
+                                    <>
+                                    <button id="edit-button" className="card-button" onClick={() => setEdit(!edit)}>Edit</button>
+                                    <button id="move-button" className="card-button" onClick={() => startMoveCard(index, listIndex)}>Move Card</button>
+                                    <button id="delete-button" className="card-button" onClick={() => deleteCard(index, listIndex)}>Delete</button>
+                                    </>
                                 }
-                                <button id="move-button" onClick={() => startMoveCard(index, listIndex)}>Move Card</button>
-                                <button id="delete-button" onClick={() => deleteCard(index, listIndex)}>Delete</button>
                             </div>
                         )
                     }
