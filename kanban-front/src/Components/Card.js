@@ -25,7 +25,7 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
                         </form>
                     </div>
                     <div id="button-container">
-                        <button id="edit-button" onClick={() => {
+                        <button id="edit-button" className="card-button" onClick={() => {
                             setCurrentTitle(newTitle);
                             setNewTitle();
                             setEdit(!edit);

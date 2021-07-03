@@ -32,7 +32,7 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
                             onKeyDown={e => handleKeyPress(e)}
                         />
                     </div>
-                    <button onClick={() => deleteList(listIndex)}>Delete</button>
+                    <button id="delete-list-btn" onClick={() => deleteList(listIndex)}>Delete</button>
                 </div>
 
                 {cardIsMoving ?
@@ -55,16 +55,14 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
 
 
                 <div className="add-content-container">
-                    <form>
                         <input type="text" className="add-content-input" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
-                        <button type="submit" onClick={e => {
+                        <button id="add-item-btn" type="submit" onClick={e => {
                             e.preventDefault()
                             addItem(newItem, listIndex)
                             setNewItem('')
                         }}>
                             Add Item
                         </button>
-                    </form>
                 </div>
 
             </div>

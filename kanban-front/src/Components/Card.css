@@ -3,10 +3,8 @@
     height: fit-content;
     min-height: 55px;
     max-height: 100px;
-    margin: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
     display: flex;
-    box-shadow: 1px 1px 2px 3px rgb(155, 155, 155);
     border-radius: 5px;
 }
 
@@ -19,5 +17,51 @@
 
 #button-container > * {
     margin-top: 2.5px;
-    margin-bottom: 2.5px;
+    margin-bottom: 4.5px;
+}
+
+.card-button {
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:linear-gradient(to bottom, #1f5c87 5%, #2c6a95 100%);
+	background-color:#1f5c87;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+.card-button:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+.card-button:active {
+	position:relative;
+	top:1px;
+}
+
+#delete-button {
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+	background-color:#d0451b;
+	border-radius:3px;
+	border:1px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #854629;
+}
+#delete-button:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+#delete-button:active {
+	position:relative;
+	top:1px;
 }

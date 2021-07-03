@@ -1,10 +1,7 @@
 .list {
     width: 20vw;
-    height: 40vh;
-    border: 2px solid black;
     display: flex;
     flex-direction: column;
-    background-color: rgb(240, 227, 204);
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -12,10 +9,40 @@
 .list-title-container {
     height: 15%;
     width: 100%;
-    background-color: rgb(72, 72, 165);
+    background-color: rgba(31,92,135,255);
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#delete-list-btn {
+    visibility: hidden;
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+	background-color:#d0451b;
+	border-radius:3px;
+	border:1px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #854629;
+}
+#delete-list-btn:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+#delete-list-btn:active {
+	position:relative;
+	top:1px;
+}
+
+
+.list-title-container:hover #delete-list-btn {
+    visibility: visible;
 }
 
 .title-input {
@@ -37,12 +64,37 @@
 }
 
 .add-content-container {
-    margin-top: auto;
+    margin-top: 10px;
+    display: flex;
 }
 
 .add-content-input {
-    width: 100%;
-    box-sizing: border-box; /* add this */
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
+    width: 80%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+
+#add-item-btn {
+    margin-left: 7.5px;
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:linear-gradient(to bottom, #1f5c87 5%, #2c6a95 100%);
+	background-color:#1f5c87;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+#add-item-btn:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+#add-item-btn:active {
+	position:relative;
+	top:1px;
 }
