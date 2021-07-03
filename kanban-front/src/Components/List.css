@@ -32,6 +32,10 @@
     word-wrap:break-word;
 }
 
+.list-item-container {
+    height: 100%;
+}
+
 .add-content-container {
     margin-top: auto;
 }

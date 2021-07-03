@@ -1,10 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 import './List.css'
 
 import Card from './Card'
 
-export default function List({listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard}) {
+export default function List({ listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard, startMoveCard, cardIsMoving, moveCard, cancelMoveCard, initialLoadDone, cardToMove }) {
     const [newItem, setNewItem] = useState('')
 
     const itemToAdd = (itemToAdd) => {
@@ -12,7 +12,7 @@ export default function List({listIndex, title, cards, changeTitle, addItem, del
     }
 
     const handleKeyPress = (e) => {
-        if(e.keyCode === 13){
+        if (e.keyCode === 13) {
             e.target.blur();
         }
     }
@@ -20,7 +20,6 @@ export default function List({listIndex, title, cards, changeTitle, addItem, del
     return (
         <div>
             <div className="list">
-
                 <div className="list-title-container">
                     <div className="list-title">
                         <textarea
@@ -36,21 +35,33 @@ export default function List({listIndex, title, cards, changeTitle, addItem, del
                     <button onClick={() => deleteList(listIndex)}>Delete</button>
                 </div>
 
-                <div className="list-item-container">
-                    {cards.map((card, index) => {
-                        return <Card key={index} listIndex={listIndex} index={index} title={card.title} isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} />
-                    })}
-                </div>
+                {cardIsMoving ?
+                    <div className="list-item-container" onClick={() => moveCard(listIndex)}>
+                        {cards.map((card, index) => {
+                            return <Card key={card._id} listIndex={listIndex} index={index} title={card.title}
+                                isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
+                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} cardToMove={cardToMove}/>
+                        })}
+                    </div> 
+                    :
+                    <div className="list-item-container">
+                        {cards.map((card, index) => {
+                            return <Card key={card._id} listIndex={listIndex} index={index} title={card.title}
+                                isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
+                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} cardToMove={cardToMove}/>
+                        })}
+                    </div>
+                }
+
 
                 <div className="add-content-container">
                     <form>
                         <input type="text" className="add-content-input" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
-                        <button type="submit" onClick={e => 
-                            {
-                                e.preventDefault()
-                                addItem(newItem, listIndex)
-                                setNewItem('')
-                            }}>
+                        <button type="submit" onClick={e => {
+                            e.preventDefault()
+                            addItem(newItem, listIndex)
+                            setNewItem('')
+                        }}>
                             Add Item
                         </button>
                     </form>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import './Board.css'
 import List from './List'
 
@@ -8,6 +8,10 @@ export default function Board() {
     const [initialLoadDone, setInitialLoadDone] = useState(false)
     const [board_id, setBoard_id] = useState();
     const [action, setAction] = useState();
+    const [cardToMove, setCardToMove] = useState([]);
+    const [cardIsMoving, setCardIsMoving] = useState(false);
+    const [movingCardIndex, setMovingCardIndex] = useState()
+
 
     let history = useHistory();
 
@@ -29,10 +33,8 @@ export default function Board() {
 
     //Update server if lists change locally
     useEffect(() => {
-        console.log("Update")
         if (!initialLoadDone) return
         if (action === "PUTLIST") {
-            console.log("Update Server");
             //Send post request with updated lists
             (async () => {
                 const requestOptions = {
@@ -40,27 +42,7 @@ export default function Board() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ boardID: board_id, lists: lists })
                 };
-                const response = await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
-                const data = await response.json();
-                const stringData = JSON.stringify(data);
-                const parsedData = JSON.parse(stringData);
-                console.log(parsedData);
-            })()
-            setAction();
-        } else if (action === "PUTCARD") {
-            console.log("Update Server");
-            //Send post request with updated cards
-            (async () => {
-                const requestOptions = {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ boardID: board_id, lists: lists })
-                };
-                const response = await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
-                const data = await response.json();
-                const stringData = JSON.stringify(data);
-                const parsedData = JSON.parse(stringData);
-                console.log(parsedData);
+                await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
             })()
             setAction();
         }
@@ -88,11 +70,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, listToRemove: list_id })
             };
-            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
-            const data = await response.json();
-            const stringData = JSON.stringify(data);
-            const parsedData = JSON.parse(stringData);
-            console.log(parsedData);
+            await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
             getBoardData();
         })()
     }
@@ -105,11 +83,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id })
             };
-            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
-            const data = await response.json();
-            const stringData = JSON.stringify(data);
-            const parsedData = JSON.parse(stringData);
-            console.log(parsedData);
+            await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
             getBoardData();
         })()
     }
@@ -123,11 +97,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, index: index, cardTitle: val })
             };
-            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
-            const data = await response.json();
-            const stringData = JSON.stringify(data);
-            const parsedData = JSON.parse(stringData);
-            console.log(parsedData);
+            await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
             getBoardData();
         })()
     }
@@ -138,7 +108,6 @@ export default function Board() {
             if (lists.indexOf(list) === listIndex) {
                 let updatedCards = list.cards.map((card, index) => {
                     if (index === cardIndex) {
-                        console.log(card, isChecked)
                         return { ...card, title: title, isChecked: isChecked }
                     }
                     return card;
@@ -161,11 +130,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, listIndex: listIndex, cardToRemove: lists[listIndex].cards[cardToRemove]._id })
             };
-            const response = await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
-            const data = await response.json();
-            const stringData = JSON.stringify(data);
-            const parsedData = JSON.parse(stringData);
-            console.log(parsedData);
+            await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
             getBoardData();
         })()
     }
@@ -178,20 +143,88 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id })
             };
-            const response = await fetch(`http://localhost:8000${window.location.pathname}`, requestOptions);
-            const data = await response.json();
-            const stringData = JSON.stringify(data);
-            const parsedData = JSON.parse(stringData);
-            console.log(parsedData);
+            await fetch(`http://localhost:8000${window.location.pathname}`, requestOptions);
         })()
         history.push('/');
+    }
+
+    useEffect(() => {
+        setMovingCardIndex(cardToMove[0])
+    }, [cardToMove])
+
+    //Get cardToMove index and the list it is starting from
+    const startMoveCard = (card, startingList) => {
+        setCardToMove([card, startingList]);
+        setCardIsMoving(true);
+    }
+
+    //Cancel the move
+    const cancelMoveCard = () => {
+        setCardIsMoving(false);
+        setCardToMove([]);
+    }
+
+    //Move card to other list
+    const moveCard = (endList) => {
+        console.log("Moving card: " + cardIsMoving)
+        console.log("CardToMove " + cardToMove)
+        let cardIndex = cardToMove[0];
+        let startList = cardToMove[1];
+        let movingCard = lists[startList].cards[cardIndex];
+
+
+        //Move to end of current list if same list is clicked
+        if(startList === endList){
+            //Do nothing if card is already in the last position
+            if(lists[startList].cards.length === 1 || cardIndex === lists[startList].cards.length - 1){
+                cancelMoveCard();
+                return;
+            }
+            let updatedLists = lists.map(list => {
+                if (lists.indexOf(list) === startList) {
+                    let card = JSON.stringify(list.cards[cardIndex]);
+                    card = JSON.parse(card);
+                    list.cards.splice(cardIndex, 1);
+                    list.cards.push(card);
+                    return list;
+                }
+                return list;
+            })
+            setAction("PUTLIST");
+            setLists(updatedLists);
+            cancelMoveCard();
+            return;
+        }
+        
+        //Move the card from starting list to the end list
+        let updatedLists = lists.map(list => {
+            //Remove from the startlist
+            if (lists.indexOf(list) === startList) {
+                let updatedCards = list.cards.filter(card => card._id !== movingCard._id)
+                return { ...list, cards: updatedCards }
+
+            //Add to endlist
+            }else if(lists.indexOf(list) === endList) {
+                let cardToAdd = JSON.stringify(movingCard);
+                cardToAdd = JSON.parse(cardToAdd);
+                list.cards.push(cardToAdd);
+                return list;
+            }
+            return list;
+        })
+        setLists(updatedLists);
+        cancelMoveCard();
     }
 
     return (
         <div id="main">
             <div id="lists">
                 {lists.map((list, index) => {
-                    return <List key={index} listIndex={index} title={list.title} cards={list.cards} changeTitle={changeTitle} addItem={addItem} deleteList={deleteList} deleteCard={deleteCard} updateCard={updateCard} />
+                    return <List key={index} listIndex={index} title={list.title} cards={list.cards}
+                        changeTitle={changeTitle} addItem={addItem} deleteList={deleteList}
+                        deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
+                        cardIsMoving={cardIsMoving} moveCard={moveCard} cancelMoveCard={cancelMoveCard}
+                        initialLoadDone={initialLoadDone} cardToMove={movingCardIndex} />
                 })}
             </div>
             <div id="new-list-container">
@@ -199,10 +232,6 @@ export default function Board() {
             </div>
             <div id="delete-board">
                 <button onClick={() => deleteBoard()}>Delete Board</button>
-            </div>
-
-            <div id="log-list-data">
-                <button onClick={() => (() => { console.log(lists) })()}>Log lists</button>
             </div>
         </div>
     )
