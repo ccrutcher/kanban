@@ -11,6 +11,8 @@
     font-family: monospace;
 }
 
+
+
 #selections {
     display: flex;
     margin-top: 10vh;
@@ -19,9 +21,21 @@
     align-items: center;
 }
 
+#enter-room-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
 #room-number-input {
     font-size: 20px;
 }
+
+#enter-room-btn {
+    font-size: 20px;
+}
+
 
 .landing-btn {
     margin-left: 7.5px;
@@ -48,9 +62,7 @@
 	top:1px;
 }
 
-#enter-room-btn {
-    font-size: 20px;
-}
+
 
 #create-board-btn {
     margin-top: 2.5vh;

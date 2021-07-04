@@ -42,7 +42,7 @@ exports.delete_a_list = async function(req, res) {
       if (err){
         res.send(err);
       }
-      res.send(data);
+      res.json(data);
     }
   );
 };

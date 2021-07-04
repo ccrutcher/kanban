@@ -16,6 +16,7 @@ export default function Board() {
 
     //Get data for current board
     const getBoardData = async () => {
+        console.log("Get Board Data")
         let boardData;
         const response = await fetch(`http://localhost:8000${window.location.pathname}`);
         const boardDataResponse = await response.json();
