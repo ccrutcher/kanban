@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const logger = require('morgan');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 const cors = require('cors');
 
 const indexRouter = require('./api/routes/index');
