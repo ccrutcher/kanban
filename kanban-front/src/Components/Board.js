@@ -17,7 +17,7 @@ export default function Board() {
     //Get data for current board
     const getBoardData = async () => {
         let boardData;
-        const response = await fetch(`http://localhost:8000${window.location.pathname}`);
+        const response = await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}`);
         const boardDataResponse = await response.json();
         boardData = JSON.stringify(boardDataResponse);
         boardData = JSON.parse(boardData)[0];
@@ -48,7 +48,7 @@ export default function Board() {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ boardID: board_id, lists: lists })
                 };
-                await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
+                await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}/lists`, requestOptions);
             })()
             setAction();
         }
@@ -76,7 +76,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, listToRemove: list_id })
             };
-            await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
+            await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}/lists`, requestOptions);
             getBoardData();
         })()
     }
@@ -89,7 +89,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id })
             };
-            await fetch(`http://localhost:8000${window.location.pathname}/lists`, requestOptions);
+            await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}/lists`, requestOptions);
             getBoardData();
         })()
     }
@@ -103,7 +103,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, index: index, cardTitle: val })
             };
-            await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
+            await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}/lists/${list_id}`, requestOptions);
             getBoardData();
         })()
     }
@@ -136,7 +136,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id, listIndex: listIndex, cardToRemove: lists[listIndex].cards[cardToRemove]._id })
             };
-            await fetch(`http://localhost:8000${window.location.pathname}/lists/${list_id}`, requestOptions);
+            await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}/lists/${list_id}`, requestOptions);
             getBoardData();
         })()
     }
@@ -149,7 +149,7 @@ export default function Board() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ boardID: board_id })
             };
-            await fetch(`http://localhost:8000${window.location.pathname}`, requestOptions);
+            await fetch(`https://crutcher-kanban-back.herokuapp.com${window.location.pathname}`, requestOptions);
         })()
         history.push('/');
     }

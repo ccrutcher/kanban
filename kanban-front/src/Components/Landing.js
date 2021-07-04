@@ -10,7 +10,7 @@ export default function Landing() {
     //Enter the room that is currently selected
     const enterRoom = async () => {
         let boardData;
-        const response = await fetch(`http://localhost:8000/board/${roomNumber}`);
+        const response = await fetch(`https://crutcher-kanban-back.herokuapp.com/board/${roomNumber}`);
         const boardDataResponse = await response.json();
         boardData = JSON.stringify(boardDataResponse);
         boardData = JSON.parse(boardData)[0];
@@ -28,7 +28,7 @@ export default function Landing() {
             const requestOptions = {
                 method: 'POST'
             };
-            const response = await fetch(`http://localhost:8000/board/createBoard`, requestOptions);
+            const response = await fetch(`https://crutcher-kanban-back.herokuapp.com/board/createBoard`, requestOptions);
             const boardCreateResponse = await response.json();
             history.push(`/board/${boardCreateResponse.boardID}`);
         })()
