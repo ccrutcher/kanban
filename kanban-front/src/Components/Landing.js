@@ -30,11 +30,15 @@ export default function Landing() {
     }
 
     return (
-        <div id="main">
+        <div id="landing-main">
+
+            <div id="landing-title">
+                Kanban
+            </div>
             <div id="selections">
-                <form>
-                    <input type="text" placeholder="Enter Room #" autoComplete="off" value={roomNumber} onChange={e => setRoomNumber(e.target.value)}></input>
-                    <button type="submit" onClick={e => 
+                <form id="enter-room-form">
+                    <input id="room-number-input" type="text" placeholder="Enter Room #" autoComplete="off" value={roomNumber} onChange={e => setRoomNumber(e.target.value)}></input>
+                    <button className="landing-btn" id="enter-room-btn" type="submit" onClick={e => 
                             {
                                 e.preventDefault()
                                 setSubmit(true);
@@ -42,7 +46,10 @@ export default function Landing() {
                             Enter
                         </button>
                 </form>
-                <button onClick={() => createRoom()}>Create New Room</button>
+                <div id="or">
+                    OR
+                </div>
+                <button className="landing-btn" id="create-board-btn" onClick={() => createRoom()}>Create New Room</button>
             </div>
         </div>
     )

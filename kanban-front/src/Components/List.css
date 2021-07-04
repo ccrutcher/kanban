@@ -44,8 +44,9 @@
 }
 
 .title-input {
+    margin-left: 5%;
     height: 100%;
-    width: 100%; 
+    width: 95%; 
     resize: none;
     box-sizing: border-box;
     border: none;

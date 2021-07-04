@@ -1,17 +1,67 @@
-#main {
+#landing-main {
     display: flex;
-    height: 40vh;
+    flex-direction: column;
+    align-items: center;
+}
+
+#landing-title {
+    margin-top: 10vh;
+    font-size: 70px;
+    font-weight: bold;
+    font-family: monospace;
 }
 
 #selections {
     display: flex;
+    margin-top: 10vh;
     flex-direction: column;
-    margin: auto;
     justify-self: center;
     align-items: center;
 }
 
-#selections > * {
-    margin-top: 10px;
-    margin-bottom: 10px;
+#enter-room-form {
+}
+
+#room-number-input {
+    font-size: 20px;
+}
+
+.landing-btn {
+    margin-left: 7.5px;
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:linear-gradient(to bottom, #1f5c87 5%, #2c6a95 100%);
+	background-color:#1f5c87;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+
+.landing-btn:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+
+.landing-btn:active {
+	position:relative;
+	top:1px;
+}
+
+#enter-room-btn {
+    font-size: 20px;
+}
+
+#create-board-btn {
+    margin-top: 2.5vh;
+    font-size: 30px;
+}
+
+#or {
+    margin-top: 2.5vh;
+    font-size: 30px;
+    font-weight: bold;
 }

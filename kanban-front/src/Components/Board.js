@@ -214,7 +214,7 @@ export default function Board() {
     }
 
     return (
-        <div id="main">
+        <div id="board-main">
             <div id="lists">
                 {lists.map((list, index) => {
                     return <List key={index} listIndex={index} title={list.title} cards={list.cards}

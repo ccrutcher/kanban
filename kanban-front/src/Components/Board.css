@@ -1,4 +1,5 @@
-#main {
+#board-main {
+	display: flex;
     justify-content: center;
     height: fit-content;
     width: 100%;
@@ -8,7 +9,7 @@
     display: flex;
     flex-wrap: wrap;
     height: fit-content;
-    width: 85vw;
+    width: 80vw;
     justify-content: space-evenly;
 }
 
@@ -26,13 +27,13 @@
     margin-top: 10px;
     margin-right: 10px;
     display: flex;
+	flex-wrap: wrap;
     height: fit-content;
-    width: 15vw;
-    align-items: center;
+    justify-content: center;
 }
 
 #buttons > * {
-    margin: 5px;
+    margin: 7.5px;
 }
 
 #new-list-btn {
