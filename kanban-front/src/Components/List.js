@@ -6,6 +6,7 @@ import Card from './Card'
 
 export default function List({ listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard, startMoveCard, cardIsMoving, moveCard, cancelMoveCard, initialLoadDone }) {
     const [newItem, setNewItem] = useState('')
+    const [currentTitle, setCurrentTitle] = useState('');
 
     const itemToAdd = (itemToAdd) => {
         setNewItem(itemToAdd)
@@ -35,8 +36,9 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
                             autoComplete="off"
                             spellCheck="false"
                             type="text"
-                            defaultValue={title}
-                            onBlur={e => changeTitle(e.target.value, listIndex)}
+                            value={title}
+                            onChange={e => setCurrentTitle(e.target.value)}
+                            onBlur={() => changeTitle(currentTitle, listIndex)}
                             onKeyDown={e => handleKeyPressTitle(e)}
                         />
                     </div>

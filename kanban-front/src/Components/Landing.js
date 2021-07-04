@@ -37,7 +37,6 @@ export default function Landing() {
 
     return (
         <div id="landing-main">
-
             <div id="landing-title">
                 Kanban
             </div>
