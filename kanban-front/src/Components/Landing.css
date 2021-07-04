@@ -23,6 +23,12 @@
     font-size: 20px;
 }
 
+#enter-room-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .landing-btn {
     margin-left: 7.5px;
 	box-shadow:inset 0px 1px 0px 0px #54a3f7;

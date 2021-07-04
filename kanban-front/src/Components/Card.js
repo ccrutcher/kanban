@@ -9,10 +9,22 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
     const [newTitle, setNewTitle] = useState(currentTitle)
 
     useEffect(() => {
-        if (!initialLoadDone) return
-        updateCard(index, listIndex, currentTitle, checked);
+        if(!initialLoadDone) return;
+        updateCard(index, listIndex, newTitle, checked);
         // eslint-disable-next-line
-    }, [checked, currentTitle])
+    }, [checked])
+
+    const finishEdit = () => {
+        setCurrentTitle(newTitle)
+        updateCard(index, listIndex, newTitle, checked);
+        setEdit(!edit);
+    }
+
+    const handleKeyPressEditCard = (e) => {
+        if (e.keyCode === 13){
+            finishEdit();
+        }
+    }
 
     return (
         <div className="card-main">
@@ -21,14 +33,12 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
                     <input visibility="hidden" id="checkbox" type="checkbox" checked={checked} onChange={() => { setChecked(!checked) }} />
                     <div style={{ textDecoration: checked === true ? 'line-through' : 'none' }} >
                         <form id="card-title-form">
-                            <input type="text" autoComplete="off" spellCheck="false" value={newTitle} onChange={e => setNewTitle(e.target.value)} />
+                            <input id="edit-card-title" type="text" autoComplete="off" spellCheck="false" value={newTitle} onChange={e => setNewTitle(e.target.value)} 
+                            onKeyDown={e => handleKeyPressEditCard(e)} onBlur={() => finishEdit()}/>
                         </form>
                     </div>
                     <div id="button-container">
-                        <button id="edit-button" className="card-button" onClick={() => {
-                            setCurrentTitle(newTitle);
-                            setEdit(!edit);
-                        }}>Done</button>
+                        <button id="edit-button" className="card-button" onClick={() => {finishEdit()}}>Done</button>
                     </div>
                 </div>
             ) : (

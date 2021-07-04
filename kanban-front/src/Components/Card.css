@@ -22,9 +22,16 @@
 }
 
 #card-title {
-	width: 70%;
+	width: 60%;
 	height: fit-content;
 	word-wrap:break-word;
+}
+
+#edit-card-title {
+	width: 80%;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 .card-button {

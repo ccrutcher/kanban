@@ -14,11 +14,11 @@ export default function Landing() {
         const boardDataResponse = await response.json();
         boardData = JSON.stringify(boardDataResponse);
         boardData = JSON.parse(boardData)[0];
-        if (boardData !== undefined) {
-            history.push(`/board/${roomNumber}`);
-        } else {
+        if (boardData === undefined) {
             alert("Please input a valid room number")
             setRoomNumber('')
+        } else {
+            history.push(`/board/${roomNumber}`);
         }
     }
 
