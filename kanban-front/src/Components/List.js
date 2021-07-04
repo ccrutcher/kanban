@@ -11,11 +11,19 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
         setNewItem(itemToAdd)
     }
 
-    const handleKeyPress = (e) => {
+    const handleKeyPressTitle = (e) => {
         if (e.keyCode === 13) {
             e.target.blur();
         }
     }
+
+    const handleKeyPressAddItem = (e) => {
+        if (e.keyCode === 13){
+            addItem(newItem, listIndex); 
+            setNewItem('');
+        }
+    }
+    
 
     return (
         <div>
@@ -29,7 +37,7 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
                             type="text"
                             defaultValue={title}
                             onBlur={e => changeTitle(e.target.value, listIndex)}
-                            onKeyDown={e => handleKeyPress(e)}
+                            onKeyDown={e => handleKeyPressTitle(e)}
                         />
                     </div>
                     <button id="delete-list-btn" onClick={() => deleteList(listIndex)}>Delete</button>
@@ -58,7 +66,8 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
 
 
                 <div className="add-content-container">
-                        <input type="text" className="add-content-input" autoComplete="off" value={newItem} onChange={e => itemToAdd(e.target.value)} />
+                        <input type="text" className="add-content-input" autoComplete="off" value={newItem} 
+                        onChange={e => itemToAdd(e.target.value)} onKeyDown={e => handleKeyPressAddItem(e)} />
                         <button id="add-item-btn" type="submit" onClick={e => {
                             e.preventDefault()
                             addItem(newItem, listIndex)

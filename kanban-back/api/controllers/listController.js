@@ -16,8 +16,6 @@ exports.create_a_list = async function(req, res) {
 
   currentBoard.save(function(err, board) {
     if (err){
-      console.log("Something went wrong while creating the list");
-      console.log(err);
       res.send(err);
     }
     res.json(board);
@@ -31,8 +29,6 @@ exports.update_lists = async function(req, res) {
 
   currentBoard.save(function(err, board) {
     if (err){
-      console.log("Something went wrong while updating the lists");
-      console.log(err);
       res.send(err);
     }
     res.json(board);
@@ -44,7 +40,6 @@ exports.delete_a_list = async function(req, res) {
     { '_id': req.body.boardID },
     { $pull: { lists: { _id: req.body.listToRemove }}}, (err, data) => {
       if (err){
-        console.log(err);
         res.send(err);
       }
       res.send(data);

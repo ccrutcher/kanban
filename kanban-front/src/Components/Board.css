@@ -1,8 +1,18 @@
+#board {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 #board-main {
 	display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     height: fit-content;
     width: 100%;
+}
+
+#board-number{
+	font-size: 50px;
 }
 
 #lists {
@@ -25,15 +35,41 @@
 
 #buttons {
     margin-top: 10px;
-    margin-right: 10px;
     display: flex;
-	flex-wrap: wrap;
+	flex-direction: column;
     height: fit-content;
-    justify-content: center;
+    align-items: center;
 }
 
 #buttons > * {
     margin: 7.5px;
+}
+
+#home-btn {
+	box-shadow:inset 0px 1px 0px 0px #54a3f7;
+	background:linear-gradient(to bottom, #1f5c87 5%, #2c6a95 100%);
+	background-color:#1f5c87;
+	border-radius:3px;
+	border:1px solid #124d77;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:6px 12px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #154682;
+}
+
+#home-btn:hover {
+	background:linear-gradient(to bottom, #0061a7 5%, #007dc1 100%);
+	background-color:#0061a7;
+}
+
+#home-btn:active {
+	position:relative;
+	top:1px;
 }
 
 #new-list-btn {
@@ -41,6 +77,7 @@
 	background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
 	background-color:#74ad5a;
 	border:1px solid #3b6e22;
+	border-radius:3px;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;

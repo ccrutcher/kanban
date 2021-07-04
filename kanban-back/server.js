@@ -4,7 +4,6 @@ const logger = require('morgan');
 const PORT = process.env.PORT || 8000;
 const cors = require('cors');
 
-const indexRouter = require('./api/routes/index');
 const boardRouter = require('./api/routes/board');
 const listRouter = require('./api/routes/list');
 const cardRouter = require('./api/routes/card');
@@ -26,7 +25,6 @@ app.use(cors());
 app.use('/board/:boardId/lists/:listId', cardRouter)
 app.use('/board/:boardId/lists', listRouter)
 app.use('/board', boardRouter)
-app.use('/', indexRouter)
 
 
 app.listen(PORT, console.log(`Server started on port ${PORT}`))

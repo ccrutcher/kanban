@@ -10,6 +10,7 @@ export default function Board() {
     const [action, setAction] = useState();
     const [cardToMove, setCardToMove] = useState([]);
     const [cardIsMoving, setCardIsMoving] = useState(false);
+    const [boardNumber, setBoardNumber] = useState()
 
     let history = useHistory();
 
@@ -20,13 +21,20 @@ export default function Board() {
         const boardDataResponse = await response.json();
         boardData = JSON.stringify(boardDataResponse);
         boardData = JSON.parse(boardData)[0];
-        setBoard_id(boardData._id)
-        setLists(boardData.lists)
-        setInitialLoadDone(true)
+        if (boardData !== undefined) {
+            setBoard_id(boardData._id)
+            setBoardNumber(boardData.boardID)
+            setLists(boardData.lists)
+            setInitialLoadDone(true)
+        } else {
+            history.push('/');
+            alert("Please enter a valid room number.");
+        }
     };
 
     useEffect(() => {
         getBoardData();
+        // eslint-disable-next-line
     }, [])
 
     //Update server if lists change locally
@@ -210,26 +218,34 @@ export default function Board() {
 
     const confirmDeleteBoard = () => {
         let deleteVerify = window.confirm("Are you sure you want to delete this board? This cannot be undone.");
-        if(deleteVerify) deleteBoard();
+        if (deleteVerify) deleteBoard();
     }
 
     return (
-        <div id="board-main">
-            <div id="lists">
-                {lists.map((list, index) => {
-                    return <List key={index} listIndex={index} title={list.title} cards={list.cards}
-                        changeTitle={changeTitle} addItem={addItem} deleteList={deleteList}
-                        deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard}
-                        cardIsMoving={cardIsMoving} moveCard={moveCard} cancelMoveCard={cancelMoveCard}
-                        initialLoadDone={initialLoadDone} />
-                })}
+        <div id="board">
+            <div id="board-number">
+                Board #{boardNumber}
             </div>
-            <div id="buttons">
-                <div>
-                    <button id="new-list-btn" onClick={() => generateNewList()}>New List</button>
+            <div id="board-main">
+                <div id="lists">
+                    {lists.map((list, index) => {
+                        return <List key={index} listIndex={index} title={list.title} cards={list.cards}
+                            changeTitle={changeTitle} addItem={addItem} deleteList={deleteList}
+                            deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard}
+                            cardIsMoving={cardIsMoving} moveCard={moveCard} cancelMoveCard={cancelMoveCard}
+                            initialLoadDone={initialLoadDone} />
+                    })}
                 </div>
-                <div >
-                    <button id="delete-board-btn" onClick={() => confirmDeleteBoard()}>Delete Board</button>
+                <div id="buttons">
+                    <div id="home-btn-container">
+                        <button id="home-btn" onClick={() => history.push(`/`)}>Home</button>
+                    </div>
+                    <div>
+                        <button id="new-list-btn" onClick={() => generateNewList()}>New List</button>
+                    </div>
+                    <div >
+                        <button id="delete-board-btn" onClick={() => confirmDeleteBoard()}>Delete Board</button>
+                    </div>
                 </div>
             </div>
         </div>
