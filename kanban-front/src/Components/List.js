@@ -4,7 +4,7 @@ import './List.css'
 
 import Card from './Card'
 
-export default function List({ listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard, startMoveCard, cardIsMoving, moveCard, cancelMoveCard, initialLoadDone, cardToMove }) {
+export default function List({ listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard, startMoveCard, cardIsMoving, moveCard, cancelMoveCard, initialLoadDone }) {
     const [newItem, setNewItem] = useState('')
 
     const itemToAdd = (itemToAdd) => {
@@ -40,15 +40,18 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
                         {cards.map((card, index) => {
                             return <Card key={card._id} listIndex={listIndex} index={index} title={card.title}
                                 isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
-                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} cardToMove={cardToMove}/>
+                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} />
                         })}
+                        <div id="accept-card-move">
+                            Move card here!
+                        </div>
                     </div> 
                     :
                     <div className="list-item-container">
                         {cards.map((card, index) => {
                             return <Card key={card._id} listIndex={listIndex} index={index} title={card.title}
                                 isChecked={card.isChecked} deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
-                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} cardToMove={cardToMove}/>
+                                cardIsMoving={cardIsMoving} cancelMoveCard={cancelMoveCard} initialLoadDone={initialLoadDone} />
                         })}
                     </div>
                 }

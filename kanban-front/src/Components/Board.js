@@ -10,8 +10,6 @@ export default function Board() {
     const [action, setAction] = useState();
     const [cardToMove, setCardToMove] = useState([]);
     const [cardIsMoving, setCardIsMoving] = useState(false);
-    const [movingCardIndex, setMovingCardIndex] = useState()
-
 
     let history = useHistory();
 
@@ -148,10 +146,6 @@ export default function Board() {
         history.push('/');
     }
 
-    useEffect(() => {
-        setMovingCardIndex(cardToMove[0])
-    }, [cardToMove])
-
     //Get cardToMove index and the list it is starting from
     const startMoveCard = (card, startingList) => {
         setCardToMove([card, startingList]);
@@ -166,17 +160,15 @@ export default function Board() {
 
     //Move card to other list
     const moveCard = (endList) => {
-        console.log("Moving card: " + cardIsMoving)
-        console.log("CardToMove " + cardToMove)
         let cardIndex = cardToMove[0];
         let startList = cardToMove[1];
         let movingCard = lists[startList].cards[cardIndex];
 
 
         //Move to end of current list if same list is clicked
-        if(startList === endList){
+        if (startList === endList) {
             //Do nothing if card is already in the last position
-            if(lists[startList].cards.length === 1 || cardIndex === lists[startList].cards.length - 1){
+            if (lists[startList].cards.length === 1 || cardIndex === lists[startList].cards.length - 1) {
                 cancelMoveCard();
                 return;
             }
@@ -195,7 +187,7 @@ export default function Board() {
             cancelMoveCard();
             return;
         }
-        
+
         //Move the card from starting list to the end list
         let updatedLists = lists.map(list => {
             //Remove from the startlist
@@ -203,8 +195,8 @@ export default function Board() {
                 let updatedCards = list.cards.filter(card => card._id !== movingCard._id)
                 return { ...list, cards: updatedCards }
 
-            //Add to endlist
-            }else if(lists.indexOf(list) === endList) {
+                //Add to endlist
+            } else if (lists.indexOf(list) === endList) {
                 let cardToAdd = JSON.stringify(movingCard);
                 cardToAdd = JSON.parse(cardToAdd);
                 list.cards.push(cardToAdd);
@@ -216,22 +208,29 @@ export default function Board() {
         cancelMoveCard();
     }
 
+    const confirmDeleteBoard = () => {
+        let deleteVerify = window.confirm("Are you sure you want to delete this board? This cannot be undone.");
+        if(deleteVerify) deleteBoard();
+    }
+
     return (
         <div id="main">
             <div id="lists">
                 {lists.map((list, index) => {
                     return <List key={index} listIndex={index} title={list.title} cards={list.cards}
                         changeTitle={changeTitle} addItem={addItem} deleteList={deleteList}
-                        deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard} 
+                        deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard}
                         cardIsMoving={cardIsMoving} moveCard={moveCard} cancelMoveCard={cancelMoveCard}
-                        initialLoadDone={initialLoadDone} cardToMove={movingCardIndex} />
+                        initialLoadDone={initialLoadDone} />
                 })}
             </div>
-            <div id="new-list-container">
-                <button onClick={() => generateNewList()}>New List</button>
-            </div>
-            <div id="delete-board">
-                <button onClick={() => deleteBoard()}>Delete Board</button>
+            <div id="buttons">
+                <div>
+                    <button id="new-list-btn" onClick={() => generateNewList()}>New List</button>
+                </div>
+                <div >
+                    <button id="delete-board-btn" onClick={() => confirmDeleteBoard()}>Delete Board</button>
+                </div>
             </div>
         </div>
     )

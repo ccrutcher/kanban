@@ -2,14 +2,15 @@
     background-color: rgb(255, 255, 255);
     height: fit-content;
     min-height: 55px;
-    max-height: 100px;
     margin-top: 5px;
     display: flex;
     border-radius: 5px;
+	display: flex;
 }
 
 #button-container {
     margin-left: auto;
+	margin-right: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,6 +19,12 @@
 #button-container > * {
     margin-top: 2.5px;
     margin-bottom: 4.5px;
+}
+
+#card-title {
+	width: 70%;
+	height: fit-content;
+	word-wrap:break-word;
 }
 
 .card-button {
@@ -64,4 +71,8 @@
 #delete-button:active {
 	position:relative;
 	top:1px;
+}
+
+#checkbox {
+	cursor: pointer;
 }
