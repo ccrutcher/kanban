@@ -229,7 +229,7 @@ export default function Board() {
             <div id="board-main">
                 <div id="lists">
                     {lists.map((list, index) => {
-                        return <List key={index} listIndex={index} title={list.title} cards={list.cards}
+                        return <List key={list._id} listIndex={index} title={list.title} cards={list.cards}
                             changeTitle={changeTitle} addItem={addItem} deleteList={deleteList}
                             deleteCard={deleteCard} updateCard={updateCard} startMoveCard={startMoveCard}
                             cardIsMoving={cardIsMoving} moveCard={moveCard} cancelMoveCard={cancelMoveCard}
