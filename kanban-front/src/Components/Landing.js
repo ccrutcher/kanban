@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 export default function Landing() {
     const [roomNumber, setRoomNumber] = useState('');
+    const [isLoading, setIsLoading] = useState(false)
 
     let history = useHistory();
 
@@ -24,6 +25,7 @@ export default function Landing() {
 
     //Send a post request to create a new board
     const createRoom = () => {
+        setIsLoading(true);
         (async () => {
             const requestOptions = {
                 method: 'POST'
@@ -53,7 +55,13 @@ export default function Landing() {
                 <div id="or">
                     OR
                 </div>
+                { isLoading ? 
+                <button className="landing-btn" id="create-board-btn">Loading...</button>
+                :
                 <button className="landing-btn" id="create-board-btn" onClick={() => createRoom()}>Create New Room</button>
+                }
+                
+
             </div>
         </div>
     )
