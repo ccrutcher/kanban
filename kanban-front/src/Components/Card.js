@@ -9,37 +9,35 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
     const [newTitle, setNewTitle] = useState(currentTitle)
 
     useEffect(() => {
-        if(!initialLoadDone) return;
+        if (!initialLoadDone) return;
         updateCard(index, listIndex, newTitle, checked);
         // eslint-disable-next-line
     }, [checked])
 
     const finishEdit = () => {
-        setCurrentTitle(newTitle)
+        setCurrentTitle(newTitle);
         updateCard(index, listIndex, newTitle, checked);
-        setEdit(!edit);
+        setEdit(false);
     }
 
     const handleKeyPressEditCard = (e) => {
-        if (e.keyCode === 13){
-            finishEdit();
+        if (e.keyCode === 13) {
+            e.target.blur();
         }
     }
 
     return (
         <div className="card-main">
             {edit ? (
-                <div className="card-container" onMouseEnter={() => setShowButtons(true)} onMouseLeave={() => setShowButtons(false)}>
+                <div className="card-container">
                     <input visibility="hidden" id="checkbox" type="checkbox" checked={checked} onChange={() => { setChecked(!checked) }} />
                     <div style={{ textDecoration: checked === true ? 'line-through' : 'none' }} >
                         <form id="card-title-form">
-                            <input id="edit-card-title" type="text" autoComplete="off" spellCheck="false" value={newTitle} onChange={e => setNewTitle(e.target.value)} 
-                            onKeyDown={e => handleKeyPressEditCard(e)} onBlur={() => finishEdit()}/>
+                            <input id="edit-card-title" type="text" autoComplete="off" spellCheck="false" value={newTitle} onChange={e => setNewTitle(e.target.value)}
+                                onKeyDown={e => handleKeyPressEditCard(e)} onBlur={() => finishEdit()} autoFocus />
                         </form>
                     </div>
-                    <div id="button-container">
-                        <button id="edit-button" className="card-button" onClick={() => {finishEdit()}}>Done</button>
-                    </div>
+                    <button id="edit-button" className="card-button" onClick={() => document.getElementById('edit-card-title').blur()}>Done</button>
                 </div>
             ) : (
                 <div className="card-container" onMouseEnter={() => setShowButtons(true)} onMouseLeave={() => setShowButtons(false)}>
@@ -54,7 +52,7 @@ export default function Card({ index, listIndex, title, isChecked, deleteCard, u
                                     <button id="edit-button" className="card-button" onClick={() => cancelMoveCard}>Cancel</button>
                                     :
                                     <>
-                                        <button id="edit-button" className="card-button" onClick={() => setEdit(!edit)}>Edit</button>
+                                        <button id="edit-button" className="card-button" onClick={() => setEdit(true)}>Edit</button>
                                         <button id="move-button" className="card-button" onClick={() => startMoveCard(index, listIndex)}>Move Card</button>
                                         <button id="delete-button" className="card-button" onClick={() => deleteCard(index, listIndex)}>Delete</button>
                                     </>

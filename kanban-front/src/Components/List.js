@@ -6,10 +6,16 @@ import Card from './Card'
 
 export default function List({ listIndex, title, cards, changeTitle, addItem, deleteList, deleteCard, updateCard, startMoveCard, cardIsMoving, moveCard, cancelMoveCard, initialLoadDone }) {
     const [newItem, setNewItem] = useState('')
-    const [currentTitle, setCurrentTitle] = useState('');
+    const [currentTitle, setCurrentTitle] = useState(title)
+    const [newTitle, setNewTitle] = useState(currentTitle)
 
     const itemToAdd = (itemToAdd) => {
-        setNewItem(itemToAdd)
+        setNewItem(itemToAdd);
+    }
+
+    const finishEdit = () => {
+        setCurrentTitle(newTitle);
+        changeTitle(newTitle, listIndex);
     }
 
     const handleKeyPressTitle = (e) => {
@@ -40,10 +46,10 @@ export default function List({ listIndex, title, cards, changeTitle, addItem, de
                             autoComplete="off"
                             spellCheck="false"
                             type="text"
-                            value={title}
-                            onChange={e => setCurrentTitle(e.target.value)}
-                            onBlur={() => changeTitle(currentTitle, listIndex)}
+                            value={newTitle}
+                            onChange={e => setNewTitle(e.target.value)}
                             onKeyDown={e => handleKeyPressTitle(e)}
+                            onBlur={() => finishEdit()}
                         />
                     </div>
                     <button id="delete-list-btn" onClick={() => confirmDeleteList()}>Delete</button>
